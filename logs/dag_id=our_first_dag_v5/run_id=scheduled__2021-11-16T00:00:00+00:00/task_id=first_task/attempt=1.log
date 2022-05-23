@@ -1,0 +1,28 @@
+[2022-05-23 20:15:14,660] {taskinstance.py:1159} INFO - Dependencies all met for <TaskInstance: our_first_dag_v5.first_task scheduled__2021-11-16T00:00:00+00:00 [queued]>
+[2022-05-23 20:15:14,667] {taskinstance.py:1159} INFO - Dependencies all met for <TaskInstance: our_first_dag_v5.first_task scheduled__2021-11-16T00:00:00+00:00 [queued]>
+[2022-05-23 20:15:14,668] {taskinstance.py:1356} INFO - 
+--------------------------------------------------------------------------------
+[2022-05-23 20:15:14,668] {taskinstance.py:1357} INFO - Starting attempt 1 of 6
+[2022-05-23 20:15:14,668] {taskinstance.py:1358} INFO - 
+--------------------------------------------------------------------------------
+[2022-05-23 20:15:14,685] {taskinstance.py:1377} INFO - Executing <Task(BashOperator): first_task> on 2021-11-16 00:00:00+00:00
+[2022-05-23 20:15:14,691] {standard_task_runner.py:52} INFO - Started process 1696 to run task
+[2022-05-23 20:15:14,694] {standard_task_runner.py:79} INFO - Running: ['***', 'tasks', 'run', 'our_first_dag_v5', 'first_task', 'scheduled__2021-11-16T00:00:00+00:00', '--job-id', '326', '--raw', '--subdir', 'DAGS_FOLDER/our_first_dag.py', '--cfg-path', '/tmp/tmpjdqh0_j_', '--error-file', '/tmp/tmp9dapuo_8']
+[2022-05-23 20:15:14,694] {standard_task_runner.py:80} INFO - Job 326: Subtask first_task
+[2022-05-23 20:15:14,755] {task_command.py:369} INFO - Running <TaskInstance: our_first_dag_v5.first_task scheduled__2021-11-16T00:00:00+00:00 [running]> on host 061a475e6c14
+[2022-05-23 20:15:14,835] {taskinstance.py:1571} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=gerson
+AIRFLOW_CTX_DAG_ID=our_first_dag_v5
+AIRFLOW_CTX_TASK_ID=first_task
+AIRFLOW_CTX_EXECUTION_DATE=2021-11-16T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2021-11-16T00:00:00+00:00
+[2022-05-23 20:15:14,836] {subprocess.py:62} INFO - Tmp dir root location: 
+ /tmp
+[2022-05-23 20:15:14,836] {subprocess.py:74} INFO - Running command: ['bash', '-c', 'echo hello world, this is the first task!']
+[2022-05-23 20:15:14,851] {subprocess.py:85} INFO - Output:
+[2022-05-23 20:15:14,851] {subprocess.py:92} INFO - hello world, this is the first task!
+[2022-05-23 20:15:14,852] {subprocess.py:96} INFO - Command exited with return code 0
+[2022-05-23 20:15:14,951] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=our_first_dag_v5, task_id=first_task, execution_date=20211116T000000, start_date=20220523T201514, end_date=20220523T201514
+[2022-05-23 20:15:14,987] {local_task_job.py:156} INFO - Task exited with return code 0
+[2022-05-23 20:15:15,041] {local_task_job.py:273} INFO - 2 downstream tasks scheduled from follow-on schedule check
