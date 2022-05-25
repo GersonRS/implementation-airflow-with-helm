@@ -10,7 +10,7 @@ airflow:
   ##
   image:
     repository: extending_airflow
-    tag: "latest"
+    tag: 1.0.0
     pullPolicy: IfNotPresent
     pullSecret: ""
     uid: 50000
@@ -20,7 +20,7 @@ airflow:
   ## - allowed values: "CeleryExecutor", "KubernetesExecutor", "CeleryKubernetesExecutor"
   ## - customize the "KubernetesExecutor" pod-template with `airflow.kubernetesPodTemplate.*`
   ##
-  executor: CeleryExecutor
+  executor: KubernetesExecutor
 
   ## the fernet encryption key (sets `AIRFLOW__CORE__FERNET_KEY`)
   ## - [WARNING] you must change this value to ensure the security of your airflow
@@ -801,7 +801,7 @@ web:
 workers:
   ## if the airflow workers StatefulSet should be deployed
   ##
-  enabled: true
+  enabled: false
 
   ## the number of worker Pods to run
   ## - if you set this >1 we recommend defining a `workers.podDisruptionBudget`
@@ -972,7 +972,7 @@ triggerer:
   ## - [WARNING] the triggerer component was added in airflow 2.2.0
   ## - [WARNING] if `airflow.legacyCommands` is `true` the triggerer will NOT be deployed
   ##
-  enabled: true
+  enabled: false
 
   ## the number of triggerer Pods to run
   ## - if you set this >1 we recommend defining a `triggerer.podDisruptionBudget`
@@ -1083,7 +1083,7 @@ triggerer:
 flower:
   ## if the airflow flower UI should be deployed
   ##
-  enabled: true
+  enabled: false
 
   ## the number of flower Pods to run
   ## - if you set this >1 we recommend defining a `flower.podDisruptionBudget`
@@ -1249,7 +1249,7 @@ logs:
 
     ## the size of PVC to request
     ##
-    size: 200m
+    size: 500m
 
 ###################################
 ## CONFIG | Airflow DAGs
@@ -1287,7 +1287,7 @@ dags:
 
     ## the size of PVC to request
     ##
-    size: 1Gi
+    size: 500m
 
   ## configs for the git-sync sidecar (https://github.com/kubernetes/git-sync)
   ##
@@ -1813,74 +1813,74 @@ postgresql:
   ## - [WARNING] consider using an external database with `externalDatabase.*`
   ## - set to `false` if using `externalDatabase.*`
   ##
-  enabled: false
+  enabled: true
 
-  # ## the postgres database to use
-  # ##
-  # postgresqlDatabase: airflow
+  ## the postgres database to use
+  ##
+  postgresqlDatabase: airflow
 
-  # ## the postgres user to create
-  # ##
-  # postgresqlUsername: postgres
+  ## the postgres user to create
+  ##
+  postgresqlUsername: postgres
 
-  # ## the postgres user's password
-  # ##
-  # postgresqlPassword: airflow
+  ## the postgres user's password
+  ##
+  postgresqlPassword: airflow
 
-  # ## the name of a pre-created secret containing the postgres password
-  # ##
-  # existingSecret: ""
+  ## the name of a pre-created secret containing the postgres password
+  ##
+  existingSecret: ""
 
-  # ## the key within `postgresql.existingSecret` containing the password string
-  # ##
-  # existingSecretKey: "postgresql-password"
+  ## the key within `postgresql.existingSecret` containing the password string
+  ##
+  existingSecretKey: "postgresql-password"
 
-  # ## configs for the PVC of postgresql
-  # ##
-  # persistence:
-  #   ## if postgres will use Persistent Volume Claims to store data
-  #   ## - [WARNING] if false, data will be LOST as postgres Pods restart
-  #   ##
-  #   enabled: true
+  ## configs for the PVC of postgresql
+  ##
+  persistence:
+    ## if postgres will use Persistent Volume Claims to store data
+    ## - [WARNING] if false, data will be LOST as postgres Pods restart
+    ##
+    enabled: true
 
-  #   ## the name of the StorageClass used by the PVC
-  #   ##
-  #   storageClass: ""
+    ## the name of the StorageClass used by the PVC
+    ##
+    storageClass: ""
 
-  #   ## the access modes of the PVC
-  #   ##
-  #   accessModes:
-  #     - ReadWriteOnce
+    ## the access modes of the PVC
+    ##
+    accessModes:
+      - ReadWriteOnce
 
-  #   ## the size of PVC to request
-  #   ##
-  #   size: 8Gi
+    ## the size of PVC to request
+    ##
+    size: 8Gi
 
-  # ## configs for the postgres StatefulSet
-  # ##
-  # master:
-  #   ## the nodeSelector configs for the postgres Pods
-  #   ## - docs for nodeSelector:
-  #   ##   https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
-  #   ##
-  #   nodeSelector: {}
+  ## configs for the postgres StatefulSet
+  ##
+  master:
+    ## the nodeSelector configs for the postgres Pods
+    ## - docs for nodeSelector:
+    ##   https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+    ##
+    nodeSelector: {}
 
-  #   ## the affinity configs for the postgres Pods
-  #   ## - spec for Affinity:
-  #   ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#affinity-v1-core
-  #   ##
-  #   affinity: {}
+    ## the affinity configs for the postgres Pods
+    ## - spec for Affinity:
+    ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#affinity-v1-core
+    ##
+    affinity: {}
 
-  #   ## the toleration configs for the postgres Pods
-  #   ## - spec for Toleration:
-  #   ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#toleration-v1-core
-  #   ##
-  #   tolerations: []
+    ## the toleration configs for the postgres Pods
+    ## - spec for Toleration:
+    ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#toleration-v1-core
+    ##
+    tolerations: []
 
-  #   ## annotations for the postgres Pods
-  #   ##
-  #   podAnnotations:
-  #     cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    ## annotations for the postgres Pods
+    ##
+    podAnnotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
 
 ###################################
 ## DATABASE | External Database
@@ -1893,7 +1893,7 @@ externalDatabase:
 
   ## the host of the external database
   ##
-  host: 172.17.0.13
+  host: localhost
 
   ## the port of the external database
   ##
@@ -1901,35 +1901,35 @@ externalDatabase:
 
   ## the database/scheme to use within the external database
   ##
-  # database: airflow
+  database: airflow
 
   ## the username for the external database
   ##
-  # user: airflow
+  user: airflow
 
   ## the name of a pre-created secret containing the external database user
   ## - if set, this overrides `externalDatabase.user`
   ##
-  # userSecret: ""
+  userSecret: ""
 
   ## the key within `externalDatabase.userSecret` containing the user string
   ##
-  # userSecretKey: "postgresql-user"
+  userSecretKey: "postgresql-user"
 
   ## the password for the external database
   ## - [WARNING] to avoid storing the password in plain-text within your values,
   ##   create a Kubernetes secret and use `externalDatabase.passwordSecret`
   ##
-  # password: ""
+  password: ""
 
   ## the name of a pre-created secret containing the external database password
   ## - if set, this overrides `externalDatabase.password`
   ##
-  passwordSecret: airflow-pgbouncer
+  passwordSecret: ""
 
   ## the key within `externalDatabase.passwordSecret` containing the password string
   ##
-  passwordSecretKey: password
+  passwordSecretKey: "postgresql-password"
 
   ## extra connection-string properties for the external database
   ##
@@ -1947,7 +1947,7 @@ redis:
   ## - set to `false` if `airflow.executor` is `KubernetesExecutor`
   ## - set to `false` if using `externalRedis.*`
   ##
-  enabled: true
+  enabled: false
 
   ## the redis password
   ##
@@ -2022,7 +2022,7 @@ redis:
 
       ## the size of PVC to request
       ##
-      size: 500m
+      size: 8Gi
 
   ## configs for the redis slave StatefulSet
   ## - only used if `redis.cluster.enabled` is `true`
@@ -2075,7 +2075,7 @@ redis:
 
       ## the size of PVC to request
       ##
-      size: 500m
+      size: 8Gi
 
 ###################################
 ## DATABASE | External Redis

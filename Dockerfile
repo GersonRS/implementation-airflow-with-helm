@@ -1,4 +1,4 @@
-FROM customising_airflow:latest
+FROM customising_airflow:1.0.0
 
 ARG SPARK_VERSION="3.2.1"
 ARG HADOOP_VERSION="3.2"
@@ -91,3 +91,4 @@ ENV PATH $PATH:$SPARK_HOME/bin
 ###############################
 
 COPY ./dags /opt/airflow/dags
+USER airflow
