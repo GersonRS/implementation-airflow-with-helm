@@ -1893,7 +1893,7 @@ externalDatabase:
 
   ## the host of the external database
   ##
-  host: 172.17.0.11
+  host: 172.17.0.9
 
   ## the port of the external database
   ##
