@@ -13,7 +13,7 @@ with DAG(
     dag_id='our_first_dag_v5',
     default_args=default_args,
     description='This is our first dag that we write',
-    start_date=datetime(2021, 7, 29, 2),
+    start_date=datetime(2022, 5, 24, 2),
     schedule_interval='@daily'
 ) as dag:
     task1 = BashOperator(

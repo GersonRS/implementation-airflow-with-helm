@@ -568,7 +568,7 @@ scheduler:
     ## if the log-cleanup sidecar is enabled
     ## - [WARNING] must be disabled if `logs.persistence.enabled` is `true`
     ##
-    enabled: true
+    enabled: false
 
     ## resource requests/limits for the log-cleanup container
     ## - spec of ResourceRequirements:
@@ -1226,7 +1226,7 @@ logs:
   persistence:
     ## if a persistent volume is mounted at `logs.path`
     ##
-    enabled: false
+    enabled: true
 
     ## the name of an existing PVC to use
     ##
@@ -1813,7 +1813,7 @@ postgresql:
   ## - [WARNING] consider using an external database with `externalDatabase.*`
   ## - set to `false` if using `externalDatabase.*`
   ##
-  enabled: true
+  enabled: false
 
   ## the postgres database to use
   ##
@@ -1893,7 +1893,7 @@ externalDatabase:
 
   ## the host of the external database
   ##
-  host: localhost
+  host: 172.17.0.11
 
   ## the port of the external database
   ##
@@ -1901,35 +1901,35 @@ externalDatabase:
 
   ## the database/scheme to use within the external database
   ##
-  database: airflow
+  database: potato
 
   ## the username for the external database
   ##
-  user: airflow
+  user: admin
 
   ## the name of a pre-created secret containing the external database user
   ## - if set, this overrides `externalDatabase.user`
   ##
-  userSecret: ""
+  # userSecret: ""
 
   ## the key within `externalDatabase.userSecret` containing the user string
   ##
-  userSecretKey: "postgresql-user"
+  # userSecretKey: "postgresql-user"
 
   ## the password for the external database
   ## - [WARNING] to avoid storing the password in plain-text within your values,
   ##   create a Kubernetes secret and use `externalDatabase.passwordSecret`
   ##
-  password: ""
+  # password: ""
 
   ## the name of a pre-created secret containing the external database password
   ## - if set, this overrides `externalDatabase.password`
   ##
-  passwordSecret: ""
+  passwordSecret: airflow-pgbouncer
 
   ## the key within `externalDatabase.passwordSecret` containing the password string
   ##
-  passwordSecretKey: "postgresql-password"
+  passwordSecretKey: password
 
   ## extra connection-string properties for the external database
   ##
